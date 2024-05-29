@@ -120,7 +120,6 @@ class Sketch {
 
   onWindowResize() {
     this.camera.aspect = this.viewport.aspectRatio;
-    this.createCamera();
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.viewport.width, this.viewport.height);
   }
