@@ -50,16 +50,17 @@ class Sketch {
     controls.target.set( 0, 0.5, 0 );
     controls.update();
   }
+
   addGUI(){
     const gui = new GUI()
     gui.addFolder('Дверь')
     gui.add(this.doorScale, "with").min(0.1).max(1).listen().onChange((val)=>{
       this.door.scale.set(0.1 * this.doorScale.with, 0.1  * this.doorScale.high, 0.1)
-            this.door.position.y = this.doorScale.high - 0.39 - this.doorScale.high + this.doorScale.high/2
+            this.door.position.y = - 0.39 + this.doorScale.high/2
         })
     gui.add(this.doorScale, "high").min(0).max(1).listen().onChange((val)=>{
         this.door.scale.set(0.1 * this.doorScale.with, 0.1  * this.doorScale.high, 0.1)
-        this.door.position.y = this.doorScale.high - 0.39 - this.doorScale.high + this.doorScale.high/2
+        this.door.position.y = - 0.39 + this.doorScale.high/2
     })
     gui.open();
   }
@@ -84,23 +85,22 @@ class Sketch {
 
   async createMesh() {
     const geometry = new THREE.PlaneGeometry( 3, 3, 3 );
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     const [map, normalMap, roughnessMap] = await Promise.all([
         this.loader.load('textures/tiles/tiles_0116_color_1k.jpg'),
         this.loader.load('textures/tiles/tiles_0116_normal_opengl_1k.png'),
         this.loader.load('textures/tiles/tiles_0116_roughness_1k.jpg'), 
     ]);
-    const material2 = new THREE.MeshStandardMaterial({ 
+    const material = new THREE.MeshStandardMaterial({ 
         map,
         normalMap,
         roughnessMap,        
      });
     material.side = THREE.DoubleSide;
-    const plane = new THREE.Mesh( geometry, material2 );
+    const plane = new THREE.Mesh( geometry, material );
     plane.rotation.x = -Math.PI / 2;
     plane.position.y = - 0.39;
     plane.receiveShadow = true;
-    this.scene.add( plane );
+    this.scene.add(plane);
   }
 
   downloadModel(){
@@ -108,9 +108,6 @@ class Sketch {
     loader.load(`models/door/scene.gltf`, (gltf) => {
         const model = gltf.scene;
         this.door = gltf.scene
-
-        console.log(this.door)
-
     model.traverse(( object )=> {
             if ( object.isMesh ) object.castShadow = true;
         });
