@@ -54,11 +54,12 @@ class Sketch {
     const gui = new GUI()
     gui.addFolder('Дверь')
     gui.add(this.doorScale, "with").min(0.1).max(1).listen().onChange((val)=>{
-            this.door.scale.set(0.1 * val, 0.1,0.1)
+      this.door.scale.set(0.1 * this.doorScale.with, 0.1  * this.doorScale.high, 0.1)
+            this.door.position.y = this.doorScale.high - 0.39 - this.doorScale.high + this.doorScale.high/2
         })
     gui.add(this.doorScale, "high").min(0).max(1).listen().onChange((val)=>{
-        this.door.scale.set(0.1, 0.1  * val, 0.1)
-        this.door.position.y = val - 0.39 - val + val/2
+        this.door.scale.set(0.1 * this.doorScale.with, 0.1  * this.doorScale.high, 0.1)
+        this.door.position.y = this.doorScale.high - 0.39 - this.doorScale.high + this.doorScale.high/2
     })
     gui.open();
   }
