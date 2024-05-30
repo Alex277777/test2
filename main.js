@@ -74,9 +74,6 @@ class Sketch {
   }
 
   createLight(){
-    const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x8d8d8d, 2 );
-    hemiLight.position.set( 0, 20, 0 );
-    this.scene.add( hemiLight );
     const dirLight = new THREE.DirectionalLight( 0xffffff, 2 );
     dirLight.position.set( - 3, 10, 14);
     dirLight.castShadow = true;
